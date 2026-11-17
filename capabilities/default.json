@@ -1,0 +1,6 @@
+{
+  "identifier": "default",
+  "description": "Main window: core APIs only. The app's own commands are registered in src/lib.rs.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

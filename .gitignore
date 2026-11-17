@@ -1,0 +1,12 @@
+/target
+/gen
+# Release builds are published as GitHub Release assets, not committed.
+/dist
+# Machine-specific cargo settings (e.g. a target-dir outside a synced folder).
+/.cargo/
+# Personal notes for Claude Code, exported settings files and local databases.
+CLAUDE.local.md
+inbox-chat-settings*.json
+*.db
+*.db-wal
+*.db-shm

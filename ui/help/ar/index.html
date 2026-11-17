@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مقدمة · تعليمات Inbox Chat</title>
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<nav class="hnav" aria-label="صفحات التعليمات">
+  <a href="index.html" aria-current="page">مقدمة</a>
+  <a href="guide.html">دليل الاستخدام</a>
+  <a href="config.html">الإعداد</a>
+  <a href="data.html">البيانات والخصوصية</a>
+  <a href="troubleshooting.html">حل المشكلات</a>
+  <a href="about.html">حول البرنامج</a>
+  <a href="../index.html" class="lang" lang="en" hreflang="en">English</a>
+</nav>
+<main>
+<h1>مرحباً بك في <span class="en">Inbox Chat</span></h1>
+<p class="lead">مساعد ذكي يعمل بجانب بريدك في Outlook الكلاسيكي. اسأله عن بريدك، واطّلع على ملخص ورد مقترح لكل رسالة،
+  واطلب منه كتابة الردود وإعادة التوجيه والرسائل الجديدة، فيحفظها لك مسوداتٍ.</p>
+
+<div class="cards">
+  <div class="card"><div class="ico">📝</div><h3>لا يرسل أبداً</h3>
+    <p>يحفظ التطبيق كل ما يكتبه في مجلد <b>المسودات</b> في Outlook، فتقرؤه وتعدّله إن شئت، ثم ترسله بنفسك من Outlook.</p></div>
+  <div class="card"><div class="ico">🧠</div><h3>أنت تختار النموذج</h3>
+    <p>نموذج محلي عبر <b>Ollama</b> يُبقي البريد داخل شبكتك. ويدعم التطبيق أيضاً النماذج السحابية من OpenAI وAnthropic وGoogle وMoonshot.</p></div>
+  <div class="card"><div class="ico">💻</div><h3>بياناتك على هذا الجهاز</h3>
+    <p>يحفظ التطبيق الإعدادات والمحادثات وما يتعلّمه في ملف واحد على هذا الحاسب. راجع <a href="data.html">البيانات والخصوصية</a>.</p></div>
+</div>
+
+<figure>
+  <img src="../img/overview.png" alt="نافذة Inbox Chat: المجلدات، وقائمة الرسائل، وجزء القراءة مع لوحة المساعد، والمحادثة">
+  <figcaption>نافذة <span class="en">Inbox Chat</span> مع صندوق البريد التجريبي المدمج. واجهة التطبيق باللغة الإنجليزية، ولذلك تذكر هذه التعليمات أسماء الأزرار كما تظهر فيه.</figcaption>
+</figure>
+
+<h2>النافذة في لمحة</h2>
+<table>
+  <tr><th>الجزء</th><th>وظيفته</th></tr>
+  <tr><td><b>الشريط العلوي</b></td><td>ضوءا الحالة: <b>Outlook</b> (الاتصال بصندوق بريدك) و<b>LLM</b> (استجابة نموذج الذكاء الاصطناعي).
+    وتظهر شارة <span class="cloud">cloud</span> عند استخدام مزوّد سحابي. وفي أقصى يمين الشريط أزرار
+    <span class="ui">Profile</span> (الملف الشخصي) و<span class="ui">Settings</span> (الإعدادات) و<span class="ui">Help</span> (التعليمات).</td></tr>
+  <tr><td><b>1 · المجلدات</b></td><td>مجلدات Outlook مع عدد الرسائل غير المقروءة. انقر مجلداً لعرض رسائله.</td></tr>
+  <tr><td><b>2 · الرسائل</b></td><td>الأحدث أولاً. توضّح الشارات ما يخصّك:
+    <span class="tag to_you">To you</span> <span class="tag cc_you">CC</span> <span class="tag mentions_you">Mentions you</span>
+    <span class="tag department">Department</span> <span class="tag request">Request</span>. وفعّل <span class="ui">For me</span> لإخفاء ما سواها.</td></tr>
+  <tr><td><b>3 · جزء القراءة</b></td><td>الرسالة كما يعرضها Outlook، وفي أعلاها لوحة <b>✨ Assistant</b> (الملخص، والمطلوب منك، والرد المقترح)،
+    ثم المرفقات والرسائل السابقة في المحادثة نفسها.</td></tr>
+  <tr><td><b>4 · المساعد</b></td><td>محادثة حول الرسالة المفتوحة أو بريدك كله. تشير الإجابات إلى الرسائل بأرقام مثل <code>m12</code>،
+    وبالنقر على الرقم تفتح الرسالة.</td></tr>
+</table>
+<p class="muted">اسحب الفواصل الرفيعة بين الأجزاء لتغيير عرضها، ويتذكّر التطبيق تخطيطك.</p>
+
+<h2>ابدأ في أربع خطوات</h2>
+<ol class="steps">
+  <li><b>جهّز Outlook الكلاسيكي.</b> يعمل <span class="en">Inbox Chat</span> مع تطبيق Outlook الكلاسيكي لسطح المكتب. وإذا لم يكن Outlook
+    مفتوحاً، يشغّله التطبيق (مصغّراً) ويتصل به بعد اكتمال تحميله.</li>
+  <li><b>اختر نموذج الذكاء الاصطناعي</b> من <span class="ui">Settings</span>: حدّد المزوّد، وتحقّق من عنوان الخادم، والصق مفتاح API إذا
+    كان المزوّد سحابياً، ثم اختر النموذج. <a href="config.html#llm">طريقة الاختيار ←</a></li>
+  <li><b>عرّف التطبيق بنفسك</b> في <span class="ui">Profile</span>: كيف يظهر اسمك في الرسائل، وفريقك ومجالات عمله، واللغة التي تكتب بها،
+    وعبارتي التحية والختام إن رغبت. <a href="config.html#profile">دليل الملف الشخصي ←</a></li>
+  <li><b>افتح رسالة واسأل.</b> اقرأ لوحة ✨، أو اكتب في المحادثة مثلاً: «لخّص هذه المراسلة» أو «ردّ بأن الأربعاء مناسب».
+    يحفظ التطبيق الرد في المسودات. <a href="guide.html">دليل الاستخدام ←</a></li>
+</ol>
+<div class="callout tip"><span class="t">لديك ملف إعدادات؟</span>
+  يمكن لزميل أو لجهاز آخر أن يزوّدك بإعداد جاهز في ملف واحد. حمّله من <span class="ui">Settings → Import from file…</span>
+  ثم أضف اسمك وأسلوبك فقط. <a href="config.html#files">ملفات الإعدادات ←</a></div>
+
+<h2>المتطلبات</h2>
+<ul>
+  <li>Windows 10 أو 11 (مكوّن WebView2 جزء من Windows 11 والإصدارات الحالية من Windows 10).</li>
+  <li>Outlook <b>الكلاسيكي</b>، أي تطبيق سطح المكتب، مع إعداد صندوق بريدك. أما Outlook <i>الجديد</i> فلا يسمح للبرامج الأخرى
+    بالتعامل معه، ولذلك لا يدعمه التطبيق.</li>
+  <li>نموذج ذكاء اصطناعي: Ollama على هذا الجهاز أو على خادم في شبكتك، أو حساب لدى مزوّد سحابي.</li>
+  <li>لا حاجة إلى تثبيت ولا إلى صلاحيات مدير النظام: يعمل الملف <code>InboxChat.exe</code> مباشرة.</li>
+</ul>
+
+<h2>جرّبه دون بريدك</h2>
+<p>شغّل التطبيق بالأمر <code>InboxChat.exe --demo</code> لاستكشاف صندوق بريد تجريبي. لا يتعامل الوضع التجريبي مع Outlook ولا يحفظ أي شيء.</p>
+
+<h2>إلى أين بعد ذلك؟</h2>
+<div class="cards">
+  <a class="card" href="guide.html"><div class="ico">📖</div><h3>دليل الاستخدام</h3><p>قراءة البريد، ولوحة ✨، والمحادثة، والمسودات، والمتابعات.</p></a>
+  <a class="card" href="config.html"><div class="ico">⚙️</div><h3>الإعداد</h3><p>مزوّدو الذكاء الاصطناعي، وملفك الشخصي وأسلوب كتابتك، وملفات الإعدادات.</p></a>
+  <a class="card" href="data.html"><div class="ico">🔒</div><h3>البيانات والخصوصية</h3><p>مكان ملف بياناتك، وما يغادر جهازك، والنسخ الاحتياطي.</p></a>
+  <a class="card" href="troubleshooting.html"><div class="ico">🛠️</div><h3>حل المشكلات</h3><p>أضواء الحالة، والتنبيهات الأمنية، وبطء الإجابات.</p></a>
+</div>
+<p class="foot">اضغط <kbd>F1</kbd> في أي مكان في التطبيق لفتح هذه التعليمات، و<kbd>Esc</kbd> لإغلاقها.</p>
+</main>
+</body>
+</html>

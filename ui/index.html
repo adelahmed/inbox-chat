@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbox Chat</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo" aria-hidden="true"></span>Inbox Chat</div>
+  <div class="notice">Read-only mail · writes go to <strong>Drafts</strong> · never sends</div>
+  <div class="status">
+    <span id="st-outlook"><span class="dot"></span>Outlook</span>
+    <span id="st-llm"><span class="dot"></span><span class="lbl">LLM</span></span>
+  </div>
+  <button class="ghost" id="open-profile" type="button" title="Your department, writing style and learning">Profile</button>
+  <button class="ghost" id="open-settings" type="button" title="Choose the LLM provider and model">Settings</button>
+  <button class="ghost" id="open-help" type="button" title="User guide, configuration and where your data is kept (F1)">Help</button>
+</header>
+<div class="banner" id="storage-warning" hidden></div>
+
+<div class="panes" id="panes">
+  <!-- 1. folder tree -->
+  <section class="pane folders" aria-label="Folders">
+    <div class="pane-head"><span>Folders</span>
+      <button class="icon-btn" id="refresh-folders" type="button" title="Refresh folders" aria-label="Refresh folders">⟳</button></div>
+    <nav id="folder-tree" class="tree"></nav>
+  </section>
+  <div class="splitter" data-var="--w-folders" data-min="150" data-max="420"></div>
+
+  <!-- 2. message list -->
+  <section class="pane list" aria-label="Messages">
+    <div class="pane-head"><span id="list-title" dir="auto">Inbox</span>
+      <label class="for-me-toggle" title="Only emails addressed to you, mentioning you or your department"><input type="checkbox" id="for-me"> For me</label>
+      <button class="icon-btn" id="refresh-list" type="button" title="Refresh" aria-label="Refresh list">⟳</button></div>
+    <div id="message-list" class="messages" tabindex="0" role="listbox" aria-label="Emails"></div>
+  </section>
+  <div class="splitter" data-var="--w-list" data-min="240" data-max="640"></div>
+
+  <!-- 3. reading pane -->
+  <section class="pane reading" aria-label="Reading pane">
+    <div id="reader" class="reader">
+      <div class="placeholder">Select an email to read it.</div>
+    </div>
+  </section>
+  <div class="splitter" data-var="--w-chat" data-min="300" data-max="760" data-invert="1"></div>
+
+  <!-- 4. assistant -->
+  <section class="pane chat" aria-label="Assistant">
+    <div class="pane-head chat-head">
+      <select id="conv-select" aria-label="Saved conversations"></select>
+      <button class="ghost small followup-btn" id="followup-btn" type="button" title="Requests I sent in the last 10 days that are still waiting for an answer">⏰ Follow-up</button>
+      <button class="icon-btn" id="new-chat" type="button" title="New conversation" aria-label="New conversation">＋</button>
+      <button class="icon-btn" id="delete-chat" type="button" title="Delete this conversation" aria-label="Delete conversation">🗑</button>
+    </div>
+    <div class="context" id="context" hidden>
+      <span>Chat is about</span> <span class="ref" id="context-ref"></span> <span class="ctx-subject" id="context-subject" dir="auto"></span>
+      <button class="x small" id="context-clear" type="button" title="Talk about the whole mailbox instead of this email" aria-label="Clear">×</button>
+    </div>
+    <main id="scroller" class="chat-scroll">
+      <div class="thread" id="thread"></div>
+    </main>
+    <form class="composer" id="form">
+      <textarea id="input" rows="1" dir="auto" placeholder="Ask, or say what to draft…"></textarea>
+      <button class="send" id="send" type="submit">Send</button>
+    </form>
+    <div class="hint">Enter to send · Shift+Enter new line · click <span class="ref">m3</span> to open that email</div>
+  </section>
+</div>
+
+<template id="empty-tpl">
+  <div class="empty" id="empty">
+    <h2>Ask your inbox anything</h2>
+    <div id="privacy">Reads Outlook on this PC. Replies go to Drafts and are never sent.</div>
+    <div class="chips">
+      <button class="chip" type="button">Summarize my unread emails from today</button>
+      <button class="chip" type="button">What needs my action or a decision this week?</button>
+      <button class="chip" type="button">Summarize this email and its thread</button>
+      <button class="chip" type="button" dir="rtl">لخّص رسائل الأمس المهمة</button>
+    </div>
+  </div>
+</template>
+
+<!-- attachment viewer -->
+<dialog id="viewer" class="viewer">
+  <div class="panel-head">
+    <h2 id="viewer-title" dir="auto">Attachment</h2>
+    <button class="ghost" type="button" id="viewer-open">Open in app</button>
+    <button class="x" type="button" id="viewer-close" aria-label="Close">×</button>
+  </div>
+  <div class="viewer-body" id="viewer-body"></div>
+</dialog>
+
+<dialog id="profile" class="wide">
+  <form id="profile-form" method="dialog">
+    <div class="panel-head">
+      <h2>Profile · <span dir="rtl">الملف الشخصي</span></h2>
+      <button class="x" type="button" id="close-profile" aria-label="Close">×</button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab active" data-tab="p-about">About me &amp; department</button>
+      <button type="button" class="tab" data-tab="p-style">Writing style</button>
+      <button type="button" class="tab" data-tab="p-learn">Learning &amp; behaviour</button>
+    </div>
+    <div class="panel-body">
+      <section class="tabpane" id="p-about">
+        <div class="row"><label for="pf-names">How you appear in To/CC</label>
+          <div class="ctl"><textarea id="pf-names" rows="2" dir="auto" placeholder="One per line"></textarea></div>
+          <div class="help" id="pf-detected"></div></div>
+        <div class="row"><label for="pf-mentions">Ways people mention you</label>
+          <div class="ctl"><textarea id="pf-mentions" rows="2" dir="auto"></textarea></div>
+          <div class="help">One per line, e.g. “Dr. Sam” or «د. سامي». An email mentioning these is marked “Mentions you”.</div></div>
+        <div class="row"><label for="pf-title">Job title</label><div class="ctl"><input type="text" id="pf-title" dir="auto"></div></div>
+        <div class="row"><label for="pf-dept">Department</label><div class="ctl"><input type="text" id="pf-dept" dir="auto"></div></div>
+        <div class="row"><label for="pf-keywords">Department keywords</label>
+          <div class="ctl"><textarea id="pf-keywords" rows="5" dir="auto"></textarea></div>
+          <div class="help">One per line. Emails containing any of these are marked “Department”.</div></div>
+        <div class="row"><label for="pf-dls">Department mailing lists</label>
+          <div class="ctl"><textarea id="pf-dls" rows="2" dir="ltr" placeholder="e.g. team@example.com"></textarea></div></div>
+        <div class="row"><label for="pf-bg">Background</label>
+          <div class="ctl col"><textarea id="pf-bg" rows="10" dir="auto" placeholder="What your team does, its projects, partners and usual requests. The assistant reads this with every request."></textarea></div>
+          <div class="help">Given to the assistant with every request so it understands your work. Keep it free of personal or confidential data.</div></div>
+      </section>
+      <section class="tabpane" id="p-style" hidden>
+        <div class="row"><label for="pf-lang">Language</label>
+          <div class="ctl"><input type="text" id="pf-lang" dir="auto" placeholder="Same as the email" list="lang-list"></div>
+          <datalist id="lang-list"><option value="Arabic"><option value="English"><option value="French"></datalist>
+          <div class="help">For summaries, suggested replies and drafts. Leave empty to answer in each email's own language.</div></div>
+        <label class="check"><input type="checkbox" id="ps-enabled"> Apply my style to every draft (greeting, sign-off, font, direction)</label>
+        <div class="row"><label for="ps-single">Greeting, one recipient</label><div class="ctl"><input type="text" id="ps-single" dir="auto"></div>
+          <div class="help">{name} is replaced by how you address the person, e.g. “Dear {name},”. In Arabic «ل{name}» joins correctly (للأستاذ…).</div></div>
+        <div class="row"><label for="ps-multi">Greeting, several</label><div class="ctl"><input type="text" id="ps-multi" dir="auto"></div></div>
+        <div class="row"><label for="ps-special">Special people</label>
+          <div class="ctl"><textarea id="ps-special" rows="3" dir="auto" placeholder="Jane Smith|J. Smith = Dear Director,"></textarea></div>
+          <div class="help">One per line: <code>names|other spelling = greeting</code>. Used when that person is the only recipient.</div></div>
+        <div class="row"><label for="ps-signoff">Sign-off</label><div class="ctl"><textarea id="ps-signoff" rows="2" dir="auto"></textarea></div></div>
+        <div class="row"><label for="ps-font">Font</label>
+          <div class="ctl"><input type="text" id="ps-font" dir="ltr"><input type="number" id="ps-size" min="8" max="36" step="1" class="narrow"> pt</div></div>
+        <label class="check"><input type="checkbox" id="ps-rtl"> Right-to-left</label>
+        <div class="style-preview" id="ps-preview"></div>
+      </section>
+      <section class="tabpane" id="p-learn" hidden>
+        <label class="check"><input type="checkbox" id="pf-markread"> Mark emails as read in Outlook when I open them or the assistant processes them</label>
+        <label class="check"><input type="checkbox" id="pl-enabled"> Learn from my sent replies (stored only on this PC)</label>
+        <label class="check"><input type="checkbox" id="pl-auto"> Show the summary &amp; suggested reply automatically when I open an email</label>
+        <div class="row"><label for="pl-days">Look back</label><div class="ctl"><input type="number" id="pl-days" min="7" max="3650" class="narrow"> days</div></div>
+        <div class="learn-status" id="pl-status">…</div>
+        <div class="ctl"><button class="ghost" type="button" id="pl-now">Learn now</button>
+          <button class="ghost" type="button" id="pl-forget" title="Delete learned replies and cached suggestions">Forget learned replies</button></div>
+        <p class="help">The app reads Sent Items: for each reply it keeps what you answered and to what, and it remembers who you write to (for To/CC lookups). Nothing is changed in Outlook. With a cloud LLM, the few examples chosen for a suggestion are sent along with it.</p>
+      </section>
+    </div>
+    <div class="panel-foot">
+      <span class="file" id="profile-msg"></span>
+      <button class="ghost" type="button" id="cancel-profile">Cancel</button>
+      <button class="primary" type="submit" id="save-profile">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="settings">
+  <form id="settings-form" method="dialog">
+    <div class="panel-head">
+      <h2>LLM settings · <span dir="rtl">إعدادات النموذج</span></h2>
+      <button class="x" type="button" id="close-settings" aria-label="Close">×</button>
+    </div>
+    <div class="panel-body">
+      <div class="seg" id="providers" role="radiogroup" aria-label="Provider"></div>
+
+      <div class="warn" id="cloud-warn" hidden>
+        <p><strong>Cloud service.</strong> The emails the assistant reads to answer you (senders, subjects, bodies)
+          are sent to <span class="cloud-name"></span> outside your network. Check your data-classification policy before using it with work mail.</p>
+        <p dir="rtl">خدمة سحابية: ستُرسَل الرسائل التي يقرؤها المساعد إلى <span class="cloud-name"></span> خارج شبكتك. راجع سياسة تصنيف البيانات قبل استخدامها مع بريد العمل.</p>
+      </div>
+
+      <fieldset>
+        <legend>Connection</legend>
+        <div class="row">
+          <label for="f-url">Server URL</label>
+          <div class="ctl"><input type="text" id="f-url" dir="ltr" spellcheck="false">
+            <button class="ghost" type="button" id="url-default" title="Restore the default URL">Default</button></div>
+        </div>
+        <div class="row" id="row-key">
+          <label for="f-key">API key</label>
+          <div class="ctl"><input type="password" id="f-key" dir="ltr" autocomplete="off" spellcheck="false">
+            <button class="ghost" type="button" id="key-clear" title="Delete the saved key">Remove</button></div>
+          <div class="help" id="key-help"></div>
+        </div>
+        <div class="row">
+          <label for="f-model">Model</label>
+          <div class="ctl"><select id="f-model-select" dir="ltr" hidden></select>
+            <input type="text" id="f-model" dir="ltr" spellcheck="false" placeholder="Model name">
+            <button class="ghost" type="button" id="test" title="Reload the model list from the server">⟳ Refresh</button></div>
+        </div>
+        <div class="row">
+          <label for="f-proxy">Proxy</label>
+          <div class="ctl"><label class="check"><input type="checkbox" id="f-proxy"> Use proxy</label>
+            <input type="text" id="f-proxy-url" dir="ltr" placeholder="blank = Windows proxy settings" spellcheck="false"></div>
+          <div class="help" id="proxy-help"></div>
+        </div>
+        <div class="test-result" id="test-result" role="status"></div>
+      </fieldset>
+
+      <fieldset id="ollama-only">
+        <legend>Ollama options</legend>
+        <div class="row">
+          <label for="f-ctx">Context window</label>
+          <div class="ctl"><input type="number" id="f-ctx" min="2048" max="262144" step="1024"></div>
+        </div>
+        <div class="row">
+          <label for="f-think">Reasoning</label>
+          <div class="ctl"><select id="f-think">
+            <option value="">Model default</option><option value="true">On</option><option value="false">Off (faster)</option>
+          </select></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>General</legend>
+        <div class="row">
+          <label for="f-temp">Temperature</label>
+          <div class="ctl"><input type="number" id="f-temp" min="0" max="2" step="0.1"></div>
+          <div class="help">Lower is more factual. 0.2 suits email work. Claude and OpenAI's GPT-5 / o-series models use their own fixed setting.</div>
+        </div>
+        <div class="row">
+          <label for="f-user">Your name</label>
+          <div class="ctl"><input type="text" id="f-user" dir="auto"></div>
+          <div class="help">Used so drafts are written from your point of view.</div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Import / export</legend>
+        <p class="help block">One JSON file with these LLM settings and your Profile (department, language, writing style, learning
+          options): to move to another PC, or to give colleagues a starting setup. Learned replies and conversations are not included.</p>
+        <div class="ctl">
+          <button class="ghost" type="button" id="import-settings">Import from file…</button>
+          <button class="ghost" type="button" id="export-settings">Export to file…</button>
+          <label class="check"><input type="checkbox" id="export-keys"> Include API keys</label>
+        </div>
+        <div class="help" id="export-keys-help">Without keys, whoever loads the file adds their own. With keys, they are written in plain text — keep the file private.</div>
+      </fieldset>
+    </div>
+    <div class="panel-foot">
+      <span class="file" id="config-file"></span>
+      <button class="ghost" type="button" id="cancel-settings">Cancel</button>
+      <button class="primary" type="submit" id="save-settings">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="help" class="help-dlg">
+  <div class="panel-head">
+    <h2>Help · <span dir="rtl">التعليمات</span></h2>
+    <span class="help-version" id="help-version"></span>
+    <button class="x" type="button" id="close-help" aria-label="Close">×</button>
+  </div>
+  <iframe id="help-frame" class="help-frame" title="Help" sandbox="allow-same-origin"></iframe>
+  <div class="panel-foot help-foot">
+    <span class="help-data-label" id="help-data-label" dir="auto">Your data file:</span>
+    <code class="help-data" id="help-data" dir="auto">…</code>
+    <button class="ghost small" type="button" id="help-copy" title="Copy the path">Copy path</button>
+  </div>
+</dialog>
+
+<dialog id="welcome" class="welcome">
+  <div class="panel-head"><h2>Welcome to Inbox Chat</h2></div>
+  <div class="panel-body">
+    <p>An assistant for your classic Outlook mailbox. It reads your mail, answers questions about it and saves replies
+      as <strong>drafts</strong> — it never sends anything.</p>
+    <p>To start, either load a settings file (from another PC or a colleague), or choose your LLM in <strong>Settings</strong>
+      and describe yourself in <strong>Profile</strong>. <strong>Help</strong> (top right, or F1) explains everything step by step.</p>
+    <p class="help" id="welcome-msg"></p>
+  </div>
+  <div class="panel-foot">
+    <button class="ghost" type="button" id="welcome-later">Later</button>
+    <button class="ghost" type="button" id="welcome-setup">Set up manually</button>
+    <button class="primary" type="button" id="welcome-import">Import a settings file…</button>
+  </div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

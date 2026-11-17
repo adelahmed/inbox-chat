@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الإعداد · تعليمات Inbox Chat</title>
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<nav class="hnav" aria-label="صفحات التعليمات">
+  <a href="index.html">مقدمة</a>
+  <a href="guide.html">دليل الاستخدام</a>
+  <a href="config.html" aria-current="page">الإعداد</a>
+  <a href="data.html">البيانات والخصوصية</a>
+  <a href="troubleshooting.html">حل المشكلات</a>
+  <a href="about.html">حول البرنامج</a>
+  <a href="../config.html" class="lang" lang="en" hreflang="en">English</a>
+</nav>
+<main>
+<h1>دليل الإعداد</h1>
+<p class="lead">تجمع نافذتان كل الخيارات: <span class="ui">Settings</span> لنموذج الذكاء الاصطناعي، و<span class="ui">Profile</span> للتعريف بك
+  وبأسلوب كتابتك. تسري التغييرات على طلبك التالي دون الحاجة إلى إعادة تشغيل التطبيق.</p>
+
+<div class="toc"><b>في هذه الصفحة</b>
+  <ol>
+    <li><a href="#llm">اختيار نموذج الذكاء الاصطناعي</a></li>
+    <li><a href="#ollama">إعداد Ollama</a></li>
+    <li><a href="#cloud">استخدام مزوّد سحابي</a></li>
+    <li><a href="#connection">قائمة النماذج والوسيط والخيارات</a></li>
+    <li><a href="#profile">الملف الشخصي: معلومات عنك</a></li>
+    <li><a href="#style">الملف الشخصي: أسلوب الكتابة</a></li>
+    <li><a href="#behaviour">الملف الشخصي: التعلّم والسلوك</a></li>
+    <li><a href="#files">ملفات الإعدادات (استيراد / تصدير)</a></li>
+    <li><a href="#advanced">متقدم: خيارات التشغيل</a></li>
+  </ol>
+</div>
+
+<h2 id="llm">1. اختيار نموذج الذكاء الاصطناعي</h2>
+<p>افتح <span class="ui">Settings</span> واختر مزوّداً من أعلى النافذة. يتذكر التطبيق لكل مزوّد عنوانه ومفتاحه ونموذجه، فيمكنك التنقل بينها.</p>
+<table>
+  <tr><th>المزوّد</th><th>مكان العمل</th><th>العنوان الافتراضي</th><th>النموذج الافتراضي</th></tr>
+  <tr><td><b>Ollama</b></td><td>هذا الجهاز أو شبكتك</td><td><code>http://localhost:11434</code></td><td><code>qwen3:8b</code></td></tr>
+  <tr><td><b>OpenAI ChatGPT</b></td><td>سحابي</td><td><code>https://api.openai.com/v1</code></td><td><code>gpt-5.1</code></td></tr>
+  <tr><td><b>Anthropic Claude</b></td><td>سحابي</td><td><code>https://api.anthropic.com/v1</code></td><td><code>claude-opus-5-5</code></td></tr>
+  <tr><td><b>Google Gemini</b></td><td>سحابي</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai</code></td><td><code>gemini-2.5-flash</code></td></tr>
+  <tr><td><b>Moonshot Kimi</b></td><td>سحابي</td><td><code>https://api.moonshot.ai/v1</code></td><td><code>kimi-k2-0905-preview</code></td></tr>
+</table>
+<div class="callout warn"><span class="t">السحابي يعني أن بريدك يغادر شبكتك.</span>
+  مع المزوّد السحابي يرسل التطبيق إلى تلك الشركة الرسائلَ التي يقرؤها المساعد ليجيبك، وكلَّ رسالة تفتحها ما دامت الاقتراحات التلقائية
+  مفعّلة. تعرض نافذة الإعدادات تحذيراً، ويعرض الشريط العلوي شارة <b>cloud</b>. راجع أنظمة جهتك قبل استخدام مزوّد سحابي مع بريد العمل،
+  أما Ollama فيُبقي كل شيء على أجهزتك.</div>
+<p>انقر <span class="ui">Save</span> عند الانتهاء. يتحول ضوء <b>LLM</b> في الشريط العلوي إلى الأخضر عندما يستجيب النموذج.</p>
+
+<h2 id="ollama">2. إعداد Ollama</h2>
+<ol class="steps">
+  <li><b>ثبّت Ollama</b> من <a href="https://ollama.com">ollama.com</a> على هذا الجهاز، أو استخدم خادم Ollama في شبكتك.</li>
+  <li><b>نزّل نموذجاً يدعم الأدوات</b>، مثلاً بكتابة الأمر التالي في موجه الأوامر: <code>ollama pull qwen3:8b</code>.
+    تعطي النماذج الأكبر (14B أو 32B) إجابات أفضل إذا كانت ذاكرة جهازك أو خادمك تتسع لها.</li>
+  <li><b>في الإعدادات</b> اختر <span class="ui">Ollama</span>. أبقِ العنوان <code>http://localhost:11434</code> لهذا الجهاز، أو اكتب عنوان
+    الخادم، مثل <code>http://gpu-server:11434</code>. ويعيد زر <span class="ui">Default</span> العنوان القياسي.</li>
+  <li><b>اختر النموذج</b> من القائمة واحفظ.</li>
+</ol>
+
+<h2 id="cloud">3. استخدام مزوّد سحابي</h2>
+<ol class="steps">
+  <li><b>أنشئ مفتاح API</b> من لوحة المطورين لدى المزوّد: OpenAI أو Anthropic أو Google AI Studio أو Moonshot. وقد يترتب على الاستخدام رسوم.</li>
+  <li><b>في الإعدادات</b> اختر المزوّد، والصق المفتاح في <span class="ui">API key</span>.</li>
+  <li><b>اختر النموذج</b> واحفظ.</li>
+</ol>
+<div class="callout ok"><span class="t">مفتاحك محمي.</span> يحفظه التطبيق مشفّراً بآلية Windows لحساب المستخدم الخاص بك، ولا يعرضه في النافذة مرة
+  أخرى سوى أحرفه الأخيرة، ولا يرسله إلا إلى ذلك المزوّد. ويحذفه زر <span class="ui">Remove</span>.</div>
+
+<h2 id="connection">4. قائمة النماذج والوسيط والخيارات</h2>
+<table>
+  <tr><th>الحقل</th><th>وظيفته</th></tr>
+  <tr><td><span class="ui">Model</span><br>النموذج</td><td>يعرض النماذج التي يتيحها الخادم، ويعيد <span class="ui">⟳ Refresh</span> تحميل القائمة.
+    وفي Ollama يعرض حجم كل نموذج وهل يدعم الأدوات. <b>اختر نموذجاً يدعم الأدوات</b>، فالمساعد يحتاجها للبحث في بريدك وقراءته. وإذا تعذّر
+    تحميل القائمة يمكنك كتابة اسم النموذج.</td></tr>
+  <tr><td><span class="ui">Proxy</span><br>الخادم الوسيط</td><td>في شبكات الشركات يمر الاتصال بالإنترنت غالباً عبر خادم وسيط. فعّل
+    <span class="ui">Use proxy</span> لاستخدام إعدادات Windows، أو اكتب عنواناً مثل <code>http://proxy:8080</code>، وهذا ضروري إذا كان Windows
+    يستخدم نص إعداد تلقائي للوسيط. يستخدم المزوّدون السحابيون الوسيط افتراضياً، بخلاف Ollama داخل شبكتك.</td></tr>
+  <tr><td><span class="ui">Context window</span><br>نافذة السياق<br><span class="muted">(Ollama فقط)</span></td><td>مقدار النص الذي يستطيع
+    النموذج النظر فيه دفعة واحدة (الافتراضي 16384). تتيح القيم الأكبر قراءة مراسلات أطول، لكنها تحتاج إلى ذاكرة ووقت أكثر.</td></tr>
+  <tr><td><span class="ui">Reasoning</span><br>التفكير<br><span class="muted">(Ollama فقط)</span></td><td>للنماذج التي «تفكر» قبل الإجابة:
+    <span class="en">Off</span> أسرع، و<span class="en">On</span> قد يكون أدق، و<span class="en">Model default</span> يترك القرار للنموذج.</td></tr>
+  <tr><td><span class="ui">Temperature</span><br>درجة العشوائية</td><td>القيم الأقل أكثر دقة وثباتاً، وتناسب القيمة 0.2 أعمال البريد. تستخدم
+    نماذج Claude ونماذج GPT-5 وسلسلة o من OpenAI إعدادها الثابت الخاص.</td></tr>
+  <tr><td><span class="ui">Your name</span><br>اسمك</td><td>ليكتب المساعد من منظورك.</td></tr>
+</table>
+
+<h2 id="profile">5. الملف الشخصي: معلومات عنك</h2>
+<p>من خلال <span class="ui">Profile → About me &amp; department</span> تعرّف التطبيق بنفسك، فيميّز ما يخصك ويفهم عملك.</p>
+<table>
+  <tr><th>الحقل</th><th>الاستخدام</th></tr>
+  <tr><td><span class="ui">How you appear in To/CC</span></td><td>أسماء العرض وعناوينك، واحد في كل سطر. يكتشف التطبيق حساب Outlook الخاص بك
+    تلقائياً، وأضف غيره إن وجد: عنواناً قديماً، أو صندوقاً مشتركاً ترد نيابة عنه.</td></tr>
+  <tr><td><span class="ui">Ways people mention you</span></td><td>كيف يخاطبك الناس في نص الرسائل، مثل «د. سامي» أو <span class="en">“Dr. Sam”</span>.
+    ويمنح ذلك شارة <span class="tag mentions_you">Mentions you</span>.</td></tr>
+  <tr><td><span class="ui">Job title</span>، <span class="ui">Department</span></td><td>المسمى الوظيفي والإدارة: سياق مختصر للمساعد.</td></tr>
+  <tr><td><span class="ui">Department keywords</span></td><td>الموضوعات وأسماء المشروعات والمنتجات، واحدة في كل سطر. تحصل الرسائل التي تتضمن
+    إحداها على شارة <span class="tag department">Department</span>. ويطابق التطبيق صيغ الكتابة العربية المختلفة.</td></tr>
+  <tr><td><span class="ui">Department mailing lists</span></td><td>عناوين الفريق، مثل <code>team@example.com</code>، ويميّز التطبيق البريد
+    الموجه إليها أيضاً.</td></tr>
+  <tr><td><span class="ui">Background</span></td><td>فقرة عن عمل فريقك ومشروعاته وشركائه وطلباته المعتادة، يقرؤها المساعد مع كل طلب.
+    احرص على خلوّها من البيانات الشخصية أو السرية.</td></tr>
+</table>
+
+<h2 id="style">6. الملف الشخصي: أسلوب الكتابة</h2>
+<p>تتحكم <span class="ui">Profile → Writing style</span> في شكل المسودات. ويطبّق التطبيق الأسلوب بنفسه، فتأتي كل مسودة متسقة أياً كان ما
+  يكتبه النموذج.</p>
+<table>
+  <tr><th>الحقل</th><th>مثال</th><th>ملاحظات</th></tr>
+  <tr><td><span class="ui">Language</span></td><td><code>Arabic</code></td><td>لغة الملخصات والاقتراحات والمسودات. اتركه فارغاً ليجيب
+    التطبيق بلغة كل رسالة.</td></tr>
+  <tr><td><span class="ui">Apply my style</span></td><td>☑</td><td>يفعّل القواعد أدناه. وعند إيقافه تتضمن المسودات النص فقط.</td></tr>
+  <tr><td><span class="ui">Greeting, one recipient</span></td><td>«مع التحية والتقدير ل{name}»</td><td>يضع التطبيق مكان <code>{name}</code>
+    طريقة مخاطبتك للشخص، مما تعلّمه من رسائلك السابقة، أو اسمه الأول.</td></tr>
+  <tr><td><span class="ui">Greeting, several</span></td><td>«مع التحية والتقدير للجميع»</td><td>عندما يكون في سطر «إلى» شخصان أو أكثر.</td></tr>
+  <tr><td><span class="ui">Special people</span></td><td>«خالد منصور|Khalid Mansour = مع التحية والتقدير لسعادة الرئيس التنفيذي»</td>
+    <td>واحد في كل سطر: أسماء الشخص وصيغ كتابتها مفصولة بالرمز <code>|</code>، ثم <code>=</code> والتحية. يستخدمها التطبيق عندما يكون ذلك
+    الشخص وحده في سطر «إلى».</td></tr>
+  <tr><td><span class="ui">Sign-off</span></td><td>«مع تحياتي<br>-سامي»</td><td>عبارة الختام، ويمكن أن تمتد على عدة أسطر.</td></tr>
+  <tr><td><span class="ui">Font</span>، <span class="ui">Right-to-left</span></td><td><span class="en">Sakkal Majalla 14</span></td><td>خط نصك في
+    المسودة وحجمه واتجاهه. للعربية اختر خطاً عربياً وفعّل <span class="ui">Right-to-left</span>.</td></tr>
+</table>
+<p>تتصل التحية العربية بالاسم اتصالاً صحيحاً: ل + الأستاذ خالد ← للأستاذ خالد. وتعرض المعاينة أسفل الحقول النتيجة قبل الحفظ.</p>
+<div class="callout tip"><span class="t">تكتب بالإنجليزية؟</span> استخدم مثلاً <code>Dear {name},</code> و<code>Dear all,</code>
+  و<code>Best regards</code> مع خط مثل Calibri، دون تفعيل <span class="ui">Right-to-left</span>.</div>
+
+<h2 id="behaviour">7. الملف الشخصي: التعلّم والسلوك</h2>
+<table>
+  <tr><th>الخيار</th><th>الافتراضي</th><th>وظيفته</th></tr>
+  <tr><td><span class="ui">Mark emails as read…</span></td><td>مفعّل</td><td>يضع علامة «مقروءة» على الرسالة في Outlook عند فتحها، أو عندما يعالجها المساعد.</td></tr>
+  <tr><td><span class="ui">Learn from my sent replies</span></td><td>مفعّل</td><td>يقرأ العناصر المرسلة ليتعلّم ردودك وجهات اتصالك، ويحفظها على هذا الجهاز فقط.</td></tr>
+  <tr><td><span class="ui">Show the summary &amp; suggested reply automatically…</span></td><td>مفعّل</td><td>يملأ لوحة ✨ عند فتح الرسالة. وعند
+    إيقافه ينتظر نقرك.</td></tr>
+  <tr><td><span class="ui">Look back</span></td><td>365 يوماً</td><td>المدة التي يرجع إليها التطبيق في العناصر المرسلة للتعلّم.</td></tr>
+</table>
+<p>يبدأ <span class="ui">Learn now</span> جولة تعلّم فوراً، ويحذف <span class="ui">Forget learned replies</span> ما تعلّمه التطبيق ولوحات ✨
+  المحفوظة، دون أي أثر على رسائلك.</p>
+
+<h2 id="files">8. ملفات الإعدادات (استيراد / تصدير)</h2>
+<p>يحفظ قسم <span class="ui">Settings → Import / export</span> إعدادات الذكاء الاصطناعي وملفك الشخصي (الإدارة، والكلمات المفتاحية، واللغة،
+  وأسلوب الكتابة، وخيارات التعلّم) في ملف واحد، ويحمّل مثل هذا الملف على جهاز آخر أو لشخص آخر. استخدمه في:</p>
+<ul>
+  <li>نقل إعدادك إلى حاسب جديد؛</li>
+  <li>تزويد الفريق بنقطة بداية واحدة (عنوان الخادم، والنموذج، ونبذة الإدارة)، ثم يضيف كل شخص اسمه وأسلوبه؛</li>
+  <li>الاحتفاظ بنسخة من إعداداتك.</li>
+</ul>
+<p>لا يتضمن الملف مفاتيح API إلا إذا حددت <span class="ui">Include API keys</span>، وعندها يكتبها التطبيق نصاً مقروءاً، فاحرص على سرية الملف.
+  ولا يصدّر التطبيق أبداً الردود المتعلَّمة ولا المحادثات. ويفحص الملف كاملاً قبل حفظ أي شيء، فلا يغيّر الملف التالف شيئاً. وعند التثبيت
+  الجديد تعرض نافذة الترحيب استيراد ملف مباشرة.</p>
+<pre><code>{
+  "format": "inbox-chat-settings",
+  "version": 1,
+  "llm": { "provider": "ollama", "temperature": 0.2, "num_ctx": 16384,
+           "providers": { "ollama": { "url": "http://gpu-server:11434", "model": "qwen3:14b", "use_proxy": false } } },
+  "profile": { "dept_name": "Customer Experience", "language": "English",
+               "style": { "enabled": true, "greeting_single": "Dear {name},", "greeting_multi": "Dear all,",
+                          "signoff": "Best regards\nSam", "font_family": "Calibri", "font_size_pt": 11, "rtl": false } }
+}</code></pre>
+<p class="muted">يمكن الاستغناء عن أي من الجزأين، وتبقى الحقول غير الموجودة في الملف على قيمها الحالية.</p>
+
+<h2 id="advanced">9. متقدم: خيارات التشغيل</h2>
+<p>للمسؤولين والمستخدمين المتقدمين. تحدد متغيرات البيئة القيم الابتدائية، وتتقدم عليها القيم المحفوظة في الإعدادات.</p>
+<table>
+  <tr><th>الخيار</th><th>الأثر</th></tr>
+  <tr><td><code>--demo</code> أو <code>INBOX_CHAT_DEMO=1</code></td><td>صندوق بريد تجريبي؛ لا يتعامل التطبيق مع Outlook ولا يحفظ شيئاً.</td></tr>
+  <tr><td><code>INBOX_CHAT_DB</code></td><td>المسار الكامل لملف البيانات بدلاً من الملف القياسي (راجع <a href="data.html#move">البيانات والخصوصية</a>).</td></tr>
+  <tr><td><code>INBOX_CHAT_PROVIDER</code></td><td>إحدى القيم: <code>ollama</code> أو <code>openai</code> أو <code>anthropic</code> أو <code>gemini</code> أو <code>kimi</code>.</td></tr>
+  <tr><td><code>OLLAMA_URL</code>، <code>OLLAMA_MODEL</code></td><td>عنوان خادم Ollama والنموذج.</td></tr>
+  <tr><td><code>OLLAMA_NUM_CTX</code>، <code>OLLAMA_THINK</code>، <code>OLLAMA_USE_PROXY</code></td><td>نافذة السياق، والتفكير (<code>true</code>/<code>false</code>)،
+    واستخدام الوسيط (<code>true</code>/<code>false</code>).</td></tr>
+  <tr><td><code>OPENAI_API_KEY</code>، <code>ANTHROPIC_API_KEY</code>،<br><code>GEMINI_API_KEY</code>، <code>MOONSHOT_API_KEY</code></td><td>مفاتيح API،
+    إن كنت تفضّل عدم حفظها في التطبيق.</td></tr>
+  <tr><td><code>INBOX_CHAT_USER</code></td><td>اسمك، كما في الإعدادات.</td></tr>
+  <tr><td><code>INBOX_CHAT_CA_BUNDLE</code></td><td>ملف PEM يحتوي الشهادة الجذرية لجهتك، للشبكات التي تفحص الاتصالات الآمنة.</td></tr>
+</table>
+<p class="foot">التالي: <a href="data.html">البيانات والخصوصية</a> · <a href="troubleshooting.html">حل المشكلات</a></p>
+</main>
+</body>
+</html>

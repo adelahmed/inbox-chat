@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User guide · Inbox Chat Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<nav class="hnav" aria-label="Help pages">
+  <a href="index.html">Introduction</a>
+  <a href="guide.html" aria-current="page">User guide</a>
+  <a href="config.html">Configuration</a>
+  <a href="data.html">Data &amp; privacy</a>
+  <a href="troubleshooting.html">Troubleshooting</a>
+  <a href="about.html">About</a>
+  <a href="ar/guide.html" class="lang" lang="ar" hreflang="ar">العربية</a>
+</nav>
+<main>
+<h1>User guide</h1>
+<p class="lead">How to read your mail, let the assistant summarize and draft for you, and keep track of what you are waiting for.</p>
+
+<div class="toc"><b>On this page</b>
+  <ol>
+    <li><a href="#reading">Reading your mail</a></li>
+    <li><a href="#attachments">Attachments and links</a></li>
+    <li><a href="#insights">The ✨ Assistant panel</a></li>
+    <li><a href="#chat">Chatting with the assistant</a></li>
+    <li><a href="#drafts">Replies, forwards and new emails</a></li>
+    <li><a href="#recipients">How recipients are found</a></li>
+    <li><a href="#style">Your writing style</a></li>
+    <li><a href="#related">“Did I reply to this?”</a></li>
+    <li><a href="#followups">Follow-ups</a></li>
+    <li><a href="#conversations">Saved conversations</a></li>
+    <li><a href="#learning">Learning from your sent mail</a></li>
+    <li><a href="#keys">Layout and keyboard</a></li>
+  </ol>
+</div>
+
+<h2 id="reading">1. Reading your mail</h2>
+<ul>
+  <li><b>Folders</b> shows your Outlook folders with the number of unread emails. Click a folder to list its emails;
+    click ▸ to open sub-folders and <span class="ui">⟳</span> to reload the tree.</li>
+  <li><b>Messages</b> lists the newest emails first, 50 at a time; scroll down for more. Unread emails are in bold.
+    Use <kbd>↑</kbd> and <kbd>↓</kbd> to move through the list.</li>
+  <li><b>Badges</b> tell you why an email may concern you:
+    <table>
+      <tr><th>Badge</th><th>Meaning</th></tr>
+      <tr><td><span class="tag to_you">To you</span></td><td class="wrap">You are on the To line.</td></tr>
+      <tr><td><span class="tag cc_you">CC</span></td><td class="wrap">You are copied.</td></tr>
+      <tr><td><span class="tag mentions_you">Mentions you</span></td><td class="wrap">The text mentions you the way people usually address you
+        (set in <a href="config.html#profile">Profile</a>, e.g. “Dr. Sam”).</td></tr>
+      <tr><td><span class="tag department">Department</span></td><td class="wrap">It contains one of your department's keywords or is sent to one of its mailing lists.</td></tr>
+      <tr><td><span class="tag request">Request</span></td><td class="wrap">It asks you for something (a question, an approval, a document).</td></tr>
+    </table>
+  </li>
+  <li>Tick <span class="ui">For me</span> above the list to see only emails addressed to you, mentioning you, or for your department.</li>
+  <li>The <b>reading pane</b> shows the email with its formatting, tables and pictures, meeting invitations included. Below it are the
+    attachments and the earlier messages of the same conversation.</li>
+  <li>An email you open is marked as <b>read</b> in Outlook too. You can turn this off in
+    <span class="ui">Profile → Learning &amp; behaviour</span>.</li>
+  <li><span class="ui">Open in Outlook</span> opens the email in Outlook's own window, for example to send a draft or to see blocked pictures.</li>
+</ul>
+
+<h2 id="attachments">2. Attachments and links</h2>
+<ul>
+  <li>Each attachment has an <span class="ui">Open</span> button, which opens it in its own application (Word, Excel, PowerPoint…).
+    Pictures, PDF files and text files (TXT, CSV, JSON, XML…) also have <span class="ui">Preview</span>, which shows them inside the app.</li>
+  <li>Files opened this way are marked as coming from the internet, so Office opens them in <b>Protected View</b>.</li>
+  <li>Risky file types (programs and scripts such as <code>.exe</code>, <code>.js</code>, <code>.bat</code>) are never opened.</li>
+  <li>Pictures stored on the internet are not downloaded, to protect your privacy (they can tell the sender when you read the email).
+    A note says how many were skipped; open the email in Outlook to see them.</li>
+  <li>Clicking a link asks you first, then opens it in your web browser.</li>
+</ul>
+
+<h2 id="insights">3. The ✨ Assistant panel</h2>
+<p>When you open an email, the assistant reads it, with its conversation, and shows a panel at the top of the reading pane:</p>
+<table>
+  <tr><th>Section</th><th>What it shows</th></tr>
+  <tr><td><b>Summary</b></td><td class="wrap">A few lines on what the email and its thread are about.</td></tr>
+  <tr><td><b>What you need to do</b></td><td class="wrap">The actions expected from you, or “Nothing for you to do”.</td></tr>
+  <tr><td><b>Suggested reply</b></td><td class="wrap">Only when a reply is needed: a draft in your style, based on how you answered
+    similar emails before. Edit the text freely; with a writing style on, check how the person is addressed in the greeting box.</td></tr>
+</table>
+<ul>
+  <li><span class="ui">Save to Drafts</span> saves it as a reply; <span class="ui">Save as Reply all</span> replies to everyone;
+    <span class="ui">Refine in chat</span> moves it to the chat so you can ask for changes (“shorter”, “more formal”, “in English”).</li>
+  <li><span class="ui">Regenerate</span> asks again; <span class="ui">Hide</span> folds the panel. Results are kept, so opening the same email again is instant.</li>
+  <li>If you replied or forwarded already, the assistant knows and does not suggest a reply unless something is still open.</li>
+</ul>
+<div class="callout tip"><span class="t">Prefer to ask first?</span>
+  Untick <span class="ui">Show the summary &amp; suggested reply automatically</span> in <span class="ui">Profile → Learning &amp; behaviour</span>.
+  The panel then shows a <span class="ui">Summarize &amp; suggest reply</span> button instead. With a cloud provider, this also means an email
+  is sent to the provider only when you click.</div>
+
+<h2 id="chat">4. Chatting with the assistant</h2>
+<p>Type in the box at the bottom right and press <kbd>Enter</kbd> (<kbd>Shift</kbd>+<kbd>Enter</kbd> for a new line).
+  You can write in English, Arabic or any language your model understands. The assistant looks through your mailbox as needed
+  and shows each step it takes (searching, reading, saving a draft) above its answer.</p>
+<ul>
+  <li><b>The open email is the default subject.</b> A bar above the chat says <i>Chat is about m12 …</i>: “reply to this”,
+    “who else is involved?” or “translate it” all refer to that email. Click <span class="ui">×</span> on the bar to talk about the whole mailbox instead.</li>
+  <li>Answers refer to emails as <code>m12</code>, <code>m13</code>…; click one to open that email.</li>
+  <li>The buttons above an open email start common requests: <span class="ui">✨ Draft reply</span>, <span class="ui">✨ Draft reply all</span>,
+    <span class="ui">✨ Forward</span> (each puts the start of a request in the chat box for you to finish) and <span class="ui">✨ Summarize thread</span> (asks at once).</li>
+</ul>
+<h3>Things you can ask</h3>
+<table>
+  <tr><th>Goal</th><th>Example</th></tr>
+  <tr><td>Catch up</td><td class="wrap">Summarize my unread emails from today · What needs my action or a decision this week?</td></tr>
+  <tr><td>Find</td><td class="wrap">Find the emails from Sara about the budget last month · Which emails have an Excel attachment from Omar?</td></tr>
+  <tr><td>Understand</td><td class="wrap">Summarize this email and its thread · What did we agree with the vendor?</td></tr>
+  <tr><td>Draft</td><td class="wrap">Reply that Wednesday works and ask for the agenda · Forward this to Sara and Omar asking for comments by Thursday ·
+    Write a new email to Noura asking for the Q3 figures</td></tr>
+  <tr><td>Check</td><td class="wrap">Did I reply to this email? · Did I take any action on Khalid's request?</td></tr>
+  <tr><td>Follow up</td><td class="wrap">What emails do I need to follow up on?</td></tr>
+  <tr><td>Arabic</td><td class="wrap"><span class="ar" dir="rtl">لخّص رسائل الأمس المهمة</span> ·
+    <span class="ar" dir="rtl">اكتب رداً بالموافقة واطلب جدول الأعمال</span></td></tr>
+</table>
+
+<h2 id="drafts">5. Replies, forwards and new emails</h2>
+<ol class="steps">
+  <li><b>Say what you want.</b> For example “Reply that we agree and will send the file on Sunday”. Short instructions are enough: the
+    assistant reads the thread and writes the full text.</li>
+  <li><b>The draft is saved in Outlook.</b> A notice confirms <i>Saved in Outlook Drafts — nothing was sent</i>. Replies keep the
+    conversation history below your text; forwards keep the attachments.</li>
+  <li><b>Review and send from Outlook.</b> Open the draft (Drafts folder, or <span class="ui">Open in Outlook to edit / send</span>),
+    make any change and press Send there.</li>
+</ol>
+<div class="callout ok"><span class="t">Inbox Chat never sends email.</span> There is no send command in the app at all. It also never
+  deletes, moves or flags your emails. The only changes it makes in Outlook are saving drafts and marking emails as read.</div>
+<ul>
+  <li><b>Meeting invitations</b> are forwarded as a normal email with the invitation attached and its details (subject, time and place)
+    written in the message, so the recipient can read it in any mail program.</li>
+  <li>Your Outlook <b>signature</b> is not added to these drafts (Outlook only adds it in its own editor). Your sign-off from the writing style is.</li>
+</ul>
+
+<h2 id="recipients">6. How recipients are found</h2>
+<p>You can name people the way you speak: “forward to Sara”, “cc Omar Saleh”, <span class="ar" dir="rtl">«أرسل لسارة»</span>.
+  The app looks for the address in this order:</p>
+<ol>
+  <li>An email address you typed is used as it is.</li>
+  <li>The people you have written to (learned from your Sent Items): one match is used. Arabic and Latin spellings of the same name
+    match each other (<span class="ar">سارة</span> = Sara).</li>
+  <li>Otherwise Outlook's address book.</li>
+</ol>
+<div class="callout warn"><span class="t">It never guesses.</span> If a name fits several people (two colleagues called Sara, say), the
+  draft keeps the name as you typed it and the assistant lists the candidates and asks you which one you mean.</div>
+
+<h2 id="style">7. Your writing style</h2>
+<p>If you set up a writing style in <a href="config.html#style">Profile → Writing style</a>, the app itself, not the AI model, adds your
+  greeting and sign-off to every draft and applies your font, size and text direction:</p>
+<ul>
+  <li>one recipient on the To line: your single greeting with their name (“Dear Sara,”);</li>
+  <li>several recipients: your group greeting (“Dear all,”); people on CC do not count;</li>
+  <li>a special person (for example your director) alone on the To line: the greeting you set for them.</li>
+</ul>
+<p>Greetings and sign-offs the model writes itself are removed, so you never get two. Arabic greetings join correctly
+  (<span class="ar" dir="rtl">ل + الأستاذ ← للأستاذ</span>).</p>
+
+<h2 id="related">8. “Did I reply to this?”</h2>
+<p>Ask “Did I reply to this email?”, “Did I forward it?” or “Did I take any action on it?”. The assistant checks what Outlook recorded
+  (replied, replied to all, forwarded, and when) and looks for related emails in Sent Items and Drafts, even when you changed the
+  subject, then tells you what you did and when.</p>
+
+<h2 id="followups">9. Follow-ups</h2>
+<p>Click <span class="ui">⏰ Follow-up</span> above the chat (or ask “What do I need to follow up on?”). You get the requests <b>you sent
+  in the last 10 days</b> that nobody on the To line has answered yet:</p>
+<ul>
+  <li>who you asked, the subject and what you asked for, with <b>⏳ days waiting</b>;</li>
+  <li>a note if you already chased it or if someone else replied;</li>
+  <li><span class="ui">Open sent email</span> to see what you wrote, and <span class="ui">Dismiss</span> to hide an item from future lists
+    (<span class="ui">Undo</span> appears for a few seconds; <span class="ui">Restore all</span> brings dismissed items back).</li>
+</ul>
+<p class="muted">The list is worked out from your Sent Items each time you ask. An email counts as a request when it asks for
+  something: “please…”, “could you…”, “let me know…”, a question, or the Arabic forms
+  (<span class="ar" dir="rtl">نأمل، نرجو، يرجى…</span>). Thank-you notes and announcements are left out.</p>
+
+<h2 id="conversations">10. Saved conversations</h2>
+<ul>
+  <li>Every chat is saved on this PC. Pick an earlier one from the list at the top of the chat to continue it.</li>
+  <li><span class="ui">＋</span> starts a new conversation; <span class="ui">🗑</span> deletes the current one (only the chat history:
+    emails and drafts are not touched).</li>
+  <li>You can switch the AI provider in Settings in the middle of a conversation; it carries on with the new model.</li>
+</ul>
+
+<h2 id="learning">11. Learning from your sent mail</h2>
+<p>In the background, every 30 minutes, the app reads your <b>Sent Items</b> (read-only) and keeps on this PC:</p>
+<ul>
+  <li><b>your past replies</b> next to the emails they answered, so suggested replies match your usual tone and length;</li>
+  <li><b>the people you write to</b>, so names in your requests turn into the right addresses.</li>
+</ul>
+<p>The first run reads the last year of sent mail and can take a minute; later runs only read what is new.
+  <span class="ui">Profile → Learning &amp; behaviour</span> shows the progress and has <span class="ui">Learn now</span> and
+  <span class="ui">Forget learned replies</span>. See <a href="data.html">Data &amp; privacy</a> for where this is stored.</p>
+
+<h2 id="keys">12. Layout and keyboard</h2>
+<p>Drag the thin bars between the panes to resize them; the sizes are remembered.</p>
+<table>
+  <tr><th>Key</th><th>Action</th></tr>
+  <tr><td><kbd>F1</kbd></td><td class="wrap">Open this help</td></tr>
+  <tr><td><kbd>Esc</kbd></td><td class="wrap">Close a window (help, settings, attachment preview)</td></tr>
+  <tr><td><kbd>↑</kbd> <kbd>↓</kbd></td><td class="wrap">Previous / next email in the list</td></tr>
+  <tr><td><kbd>Enter</kbd></td><td class="wrap">Send your message to the assistant</td></tr>
+  <tr><td><kbd>Shift</kbd>+<kbd>Enter</kbd></td><td class="wrap">New line in your message</td></tr>
+</table>
+<p class="foot">Next: <a href="config.html">Configuration</a> · <a href="data.html">Data &amp; privacy</a></p>
+</main>
+</body>
+</html>

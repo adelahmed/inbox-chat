@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configuration · Inbox Chat Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<nav class="hnav" aria-label="Help pages">
+  <a href="index.html">Introduction</a>
+  <a href="guide.html">User guide</a>
+  <a href="config.html" aria-current="page">Configuration</a>
+  <a href="data.html">Data &amp; privacy</a>
+  <a href="troubleshooting.html">Troubleshooting</a>
+  <a href="about.html">About</a>
+  <a href="ar/config.html" class="lang" lang="ar" hreflang="ar">العربية</a>
+</nav>
+<main>
+<h1>Configuration guide</h1>
+<p class="lead">Two windows hold all the options: <b>Settings</b> for the AI model, and <b>Profile</b> for who you are and how you
+  write. Changes apply to your next request; there is no need to restart.</p>
+
+<div class="toc"><b>On this page</b>
+  <ol>
+    <li><a href="#llm">Choosing the AI model</a></li>
+    <li><a href="#ollama">Setting up Ollama</a></li>
+    <li><a href="#cloud">Using a cloud provider</a></li>
+    <li><a href="#connection">Model list, proxy and options</a></li>
+    <li><a href="#profile">Profile: about you</a></li>
+    <li><a href="#style">Profile: writing style</a></li>
+    <li><a href="#behaviour">Profile: learning &amp; behaviour</a></li>
+    <li><a href="#files">Settings files (import / export)</a></li>
+    <li><a href="#advanced">Advanced: start options</a></li>
+  </ol>
+</div>
+
+<h2 id="llm">1. Choosing the AI model</h2>
+<p>Open <span class="ui">Settings</span> and pick a provider at the top. Each one remembers its own address, key and model, so you can
+  switch back and forth.</p>
+<table>
+  <tr><th>Provider</th><th>Runs</th><th>Default address</th><th>Default model</th></tr>
+  <tr><td><b>Ollama</b></td><td>this PC or your network</td><td><code>http://localhost:11434</code></td><td><code>qwen3:8b</code></td></tr>
+  <tr><td><b>OpenAI ChatGPT</b></td><td>cloud</td><td><code>https://api.openai.com/v1</code></td><td><code>gpt-5.1</code></td></tr>
+  <tr><td><b>Anthropic Claude</b></td><td>cloud</td><td><code>https://api.anthropic.com/v1</code></td><td><code>claude-opus-5-5</code></td></tr>
+  <tr><td><b>Google Gemini</b></td><td>cloud</td><td class="wrap"><code>https://generativelanguage.googleapis.com/v1beta/openai</code></td><td><code>gemini-2.5-flash</code></td></tr>
+  <tr><td><b>Moonshot Kimi</b></td><td>cloud</td><td><code>https://api.moonshot.ai/v1</code></td><td><code>kimi-k2-0905-preview</code></td></tr>
+</table>
+<div class="callout warn"><span class="t">Cloud means your mail leaves your network.</span>
+  With a cloud provider, the emails the assistant reads to answer you, and each email you open while automatic suggestions are on,
+  are sent to that company. Settings shows a warning and the top bar a <b>cloud</b> badge. Check your organisation's rules before using
+  a cloud provider with work mail. Ollama keeps everything on your own computers.</div>
+<p>Click <span class="ui">Save</span> when done. The <b>LLM</b> light in the top bar turns green when the model answers.</p>
+
+<h2 id="ollama">2. Setting up Ollama</h2>
+<ol class="steps">
+  <li><b>Install Ollama</b> from <a href="https://ollama.com">ollama.com</a> on this PC, or use an Ollama server on your network.</li>
+  <li><b>Download a model</b> that can use tools, for example in a command prompt: <code>ollama pull qwen3:8b</code>.
+    Larger models (14B, 32B) give better answers if your PC or server has the memory for them.</li>
+  <li><b>In Settings</b>, choose <span class="ui">Ollama</span>. Keep <code>http://localhost:11434</code> for this PC, or type the server's
+    address, e.g. <code>http://gpu-server:11434</code>. <span class="ui">Default</span> restores the standard address.</li>
+  <li><b>Pick the model</b> from the list and save.</li>
+</ol>
+
+<h2 id="cloud">3. Using a cloud provider</h2>
+<ol class="steps">
+  <li><b>Create an API key</b> in the provider's developer console (OpenAI, Anthropic, Google AI Studio or Moonshot). Paid usage may apply.</li>
+  <li><b>In Settings</b>, choose the provider and paste the key into <span class="ui">API key</span>.</li>
+  <li><b>Choose a model</b> and save.</li>
+</ol>
+<div class="callout ok"><span class="t">Your key is protected.</span> It is stored encrypted with Windows for your user account, is never shown
+  again in the window (only its last characters), and is sent only to that provider. <span class="ui">Remove</span> deletes it.</div>
+
+<h2 id="connection">4. Model list, proxy and options</h2>
+<table>
+  <tr><th>Field</th><th>What it does</th></tr>
+  <tr><td><b>Model</b></td><td class="wrap">Lists the models the server offers; <span class="ui">⟳ Refresh</span> reloads the list. For Ollama it shows
+    each model's size and whether it can use tools. <b>Choose a model that can use tools</b>: the assistant needs them to search and
+    read your mail. If the list cannot be loaded you can type a model name.</td></tr>
+  <tr><td><b>Proxy</b></td><td class="wrap">On company networks the internet is often reached through a proxy. Tick <span class="ui">Use proxy</span>
+    to use the Windows proxy settings, or type an address such as <code>http://proxy:8080</code> (needed when Windows uses an automatic
+    configuration script). Cloud providers use the proxy by default; Ollama on your own network does not.</td></tr>
+  <tr><td><b>Context window</b><br><span class="muted">Ollama only</span></td><td class="wrap">How much text the model can consider at once
+    (default 16384). Larger values let it read longer threads but need more memory and time.</td></tr>
+  <tr><td><b>Reasoning</b><br><span class="muted">Ollama only</span></td><td class="wrap">For models that “think” before answering:
+    <i>Off</i> is faster, <i>On</i> can be more careful, <i>Model default</i> leaves it to the model.</td></tr>
+  <tr><td><b>Temperature</b></td><td class="wrap">Lower is more factual and consistent; 0.2 suits email work. Claude and OpenAI's GPT-5 and o-series
+    models use their own fixed setting.</td></tr>
+  <tr><td><b>Your name</b></td><td class="wrap">So the assistant writes from your point of view.</td></tr>
+</table>
+
+<h2 id="profile">5. Profile: about you</h2>
+<p><span class="ui">Profile → About me &amp; department</span> tells the app who you are, so it can mark what concerns you and
+  understand your work.</p>
+<table>
+  <tr><th>Field</th><th>Use it for</th></tr>
+  <tr><td><b>How you appear in To/CC</b></td><td class="wrap">Your display names and addresses, one per line. Your Outlook account is detected
+    automatically; add others (an old address, a shared mailbox you answer for).</td></tr>
+  <tr><td><b>Ways people mention you</b></td><td class="wrap">How people address you in the text, e.g. “Dr. Sam” or <span class="ar">«د. سامي»</span>.
+    Gives the <span class="tag mentions_you">Mentions you</span> badge.</td></tr>
+  <tr><td><b>Job title, Department</b></td><td class="wrap">Short context for the assistant.</td></tr>
+  <tr><td><b>Department keywords</b></td><td class="wrap">Topics, project and product names, one per line. Emails containing one get the
+    <span class="tag department">Department</span> badge. Arabic spelling variants are matched.</td></tr>
+  <tr><td><b>Department mailing lists</b></td><td class="wrap">Team addresses such as <code>team@example.com</code>; mail sent to them is marked too.</td></tr>
+  <tr><td><b>Background</b></td><td class="wrap">A paragraph on what your team does, its projects, partners and usual requests. The assistant
+    reads it with every request. Keep it free of personal or confidential details.</td></tr>
+</table>
+
+<h2 id="style">6. Profile: writing style</h2>
+<p><span class="ui">Profile → Writing style</span> controls how drafts look. The app applies it itself, so every draft is consistent
+  whatever the model writes.</p>
+<table>
+  <tr><th>Field</th><th>Example</th><th>Notes</th></tr>
+  <tr><td><b>Language</b></td><td>English</td><td class="wrap">Language of summaries, suggestions and drafts. Leave empty to answer in each email's own language.</td></tr>
+  <tr><td><b>Apply my style</b></td><td>☑</td><td class="wrap">Turns the rules below on. Off: drafts contain just the text.</td></tr>
+  <tr><td><b>Greeting, one recipient</b></td><td><code>Dear {name},</code></td><td class="wrap"><code>{name}</code> becomes how you address the person
+    (learned from your past emails, or their first name).</td></tr>
+  <tr><td><b>Greeting, several</b></td><td><code>Dear all,</code></td><td class="wrap">When the To line has two or more people.</td></tr>
+  <tr><td><b>Special people</b></td><td class="wrap"><code>Jane Smith|J. Smith = Dear Director,</code></td><td class="wrap">One per line: the person's names and
+    spellings separated by <code>|</code>, then <code>=</code> and the greeting. Used when that person is the only one on the To line.</td></tr>
+  <tr><td><b>Sign-off</b></td><td class="wrap"><code>Best regards<br>Sam</code></td><td class="wrap">Can have several lines.</td></tr>
+  <tr><td><b>Font, size, right-to-left</b></td><td>Calibri 11</td><td class="wrap">The font and direction of your text in the draft.</td></tr>
+</table>
+<div class="callout tip"><span class="t">Writing in Arabic?</span> A greeting such as <span class="ar" dir="rtl">«مع التحية والتقدير ل{name}»</span>
+  joins correctly: <span class="ar" dir="rtl">ل + الأستاذ خالد ← للأستاذ خالد</span>. Choose an Arabic font (e.g. Sakkal Majalla) and tick
+  <span class="ui">Right-to-left</span>. The preview under the fields shows the result.</div>
+
+<h2 id="behaviour">7. Profile: learning &amp; behaviour</h2>
+<table>
+  <tr><th>Option</th><th>Default</th><th>What it does</th></tr>
+  <tr><td><b>Mark emails as read</b></td><td>on</td><td class="wrap">Marks an email read in Outlook when you open it or the assistant works on it.</td></tr>
+  <tr><td><b>Learn from my sent replies</b></td><td>on</td><td class="wrap">Reads Sent Items to learn your replies and contacts (stored only on this PC).</td></tr>
+  <tr><td><b>Show the summary &amp; suggested reply automatically</b></td><td>on</td><td class="wrap">Fills the ✨ panel when you open an email.
+    Off: it waits for you to click.</td></tr>
+  <tr><td><b>Look back</b></td><td>365 days</td><td class="wrap">How far back in Sent Items to learn from.</td></tr>
+</table>
+<p><span class="ui">Learn now</span> starts a learning run at once; <span class="ui">Forget learned replies</span> deletes what was learned and
+  the saved ✨ panels (your emails are not affected).</p>
+
+<h2 id="files">8. Settings files (import / export)</h2>
+<p><span class="ui">Settings → Import / export</span> saves the AI settings and your Profile (department, keywords, language, writing style,
+  learning options) as one file, and loads such a file on another PC or for another person. Use it to:</p>
+<ul>
+  <li>move your setup to a new computer;</li>
+  <li>give a team one starting point (server address, model, department background); each person then adds their own name and style;</li>
+  <li>keep a copy of your configuration.</li>
+</ul>
+<p>API keys are left out unless you tick <span class="ui">Include API keys</span>; they are then written in plain text, so keep such a file
+  private. Learned replies and conversations are never exported. A file is checked completely before anything is saved, so a damaged
+  file changes nothing. On a new installation, the welcome window offers to import a file straight away.</p>
+<pre><code>{
+  "format": "inbox-chat-settings",
+  "version": 1,
+  "llm": { "provider": "ollama", "temperature": 0.2, "num_ctx": 16384,
+           "providers": { "ollama": { "url": "http://gpu-server:11434", "model": "qwen3:14b", "use_proxy": false } } },
+  "profile": { "dept_name": "Customer Experience", "language": "English",
+               "style": { "enabled": true, "greeting_single": "Dear {name},", "greeting_multi": "Dear all,",
+                          "signoff": "Best regards\nSam", "font_family": "Calibri", "font_size_pt": 11, "rtl": false } }
+}</code></pre>
+<p class="muted">Either part may be left out; missing fields keep their current values.</p>
+
+<h2 id="advanced">9. Advanced: start options</h2>
+<p>For administrators and power users. Environment variables give starting values; anything saved in Settings takes precedence.</p>
+<table>
+  <tr><th>Option</th><th>Effect</th></tr>
+  <tr><td><code>--demo</code> or <code>INBOX_CHAT_DEMO=1</code></td><td class="wrap">Sample mailbox; Outlook is not touched and nothing is saved.</td></tr>
+  <tr><td><code>INBOX_CHAT_DB</code></td><td class="wrap">Full path of the data file to use instead of the standard one (see <a href="data.html#move">Data &amp; privacy</a>).</td></tr>
+  <tr><td><code>INBOX_CHAT_PROVIDER</code></td><td class="wrap"><code>ollama</code>, <code>openai</code>, <code>anthropic</code>, <code>gemini</code> or <code>kimi</code>.</td></tr>
+  <tr><td><code>OLLAMA_URL</code>, <code>OLLAMA_MODEL</code></td><td class="wrap">Ollama server address and model.</td></tr>
+  <tr><td><code>OLLAMA_NUM_CTX</code>, <code>OLLAMA_THINK</code>, <code>OLLAMA_USE_PROXY</code></td><td class="wrap">Context window, reasoning (true/false), use the proxy (true/false).</td></tr>
+  <tr><td><code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>,<br><code>GEMINI_API_KEY</code>, <code>MOONSHOT_API_KEY</code></td><td class="wrap">API keys, if you prefer not to save them in the app.</td></tr>
+  <tr><td><code>INBOX_CHAT_USER</code></td><td class="wrap">Your name, as in Settings.</td></tr>
+  <tr><td><code>INBOX_CHAT_CA_BUNDLE</code></td><td class="wrap">A PEM file with your company's root certificate, for networks that inspect secure connections.</td></tr>
+</table>
+<p class="foot">Next: <a href="data.html">Data &amp; privacy</a> · <a href="troubleshooting.html">Troubleshooting</a></p>
+</main>
+</body>
+</html>

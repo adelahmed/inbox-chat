@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troubleshooting · Inbox Chat Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<nav class="hnav" aria-label="Help pages">
+  <a href="index.html">Introduction</a>
+  <a href="guide.html">User guide</a>
+  <a href="config.html">Configuration</a>
+  <a href="data.html">Data &amp; privacy</a>
+  <a href="troubleshooting.html" aria-current="page">Troubleshooting</a>
+  <a href="about.html">About</a>
+  <a href="ar/troubleshooting.html" class="lang" lang="ar" hreflang="ar">العربية</a>
+</nav>
+<main>
+<h1>Troubleshooting</h1>
+<p class="lead">The two lights in the top bar tell you where a problem is: <b>Outlook</b> for your mailbox, <b>LLM</b> for the AI model.</p>
+
+<h2>Outlook</h2>
+<h3>The Outlook light is red or no folders appear</h3>
+<ul>
+  <li>If Outlook was closed, the app starts it minimized and connects once it has loaded. This can take up to a minute and a half.</li>
+  <li>Finish any Outlook window that is waiting for you (profile choice, password, update), then click <span class="ui">⟳</span> next to Folders.</li>
+  <li>Make sure you use <b>classic</b> Outlook. If the <i>New Outlook</i> switch at the top of Outlook is on, turn it off.
+    The new Outlook cannot be used by other programs.</li>
+</ul>
+<h3>Outlook asks “A program is trying to access e-mail address information…”</h3>
+<p>This is Outlook's own security guard. Whether it appears depends on your organisation's settings and antivirus status. Choose
+  <b>Allow</b> (for up to 10 minutes) to let Inbox Chat read your mail, or ask your IT team to approve the app.</p>
+<h3>Some pictures are missing in an email</h3>
+<p>Pictures stored on the internet are not downloaded, on purpose. Click <span class="ui">Open in Outlook</span> to see the email with them.</p>
+
+<h2>AI model</h2>
+<h3>The LLM light is red</h3>
+<ul>
+  <li><b>Ollama:</b> check that Ollama is running on that computer, that the address in Settings is right (default
+    <code>http://localhost:11434</code>) and that the model is downloaded (<code>ollama list</code>). Another PC's Ollama must be set up to
+    accept connections from the network.</li>
+  <li><b>Cloud provider:</b> check the API key and that your account has credit. On a company network, tick
+    <span class="ui">Use proxy</span>; if Windows uses an automatic proxy script, type the proxy address yourself.</li>
+  <li><b>Certificate (TLS) errors</b> on a company network that inspects secure connections: set <code>INBOX_CHAT_CA_BUNDLE</code> to your
+    company's root certificate (PEM file). See <a href="config.html#advanced">start options</a>.</li>
+</ul>
+<h3>“Could not decrypt the … API key”</h3>
+<p>The data file was copied from another PC or Windows account, where the key was encrypted. Enter the key again in Settings and save.</p>
+<h3>The assistant doesn't look at my mail, or invents answers</h3>
+<p>Choose a model that can use tools (the Model list shows this for Ollama). Very small models struggle; try a larger one.</p>
+<h3>Answers are slow</h3>
+<ul>
+  <li>Local models depend on your hardware. Try a smaller model, set <span class="ui">Reasoning</span> to <i>Off</i>, or lower the
+    <span class="ui">Context window</span>.</li>
+  <li>The ✨ panel runs for each email you open. If that slows you down, turn off automatic suggestions in
+    <span class="ui">Profile → Learning &amp; behaviour</span>.</li>
+</ul>
+
+<h2>Drafts and recipients</h2>
+<h3>I can't find a draft</h3>
+<p>Drafts are saved in Outlook's <b>Drafts</b> folder (click it in the folder tree), newest first. The chat shows each saved draft as a step.</p>
+<h3>The assistant asks which person I mean</h3>
+<p>Several people match the name you gave. Answer with the full name or the email address. Names are learned from your Sent Items;
+  <span class="ui">Profile → Learning &amp; behaviour → Learn now</span> picks up people you wrote to recently.</p>
+<h3>My Outlook signature is missing in drafts</h3>
+<p>Outlook adds signatures only in its own editor. Put your sign-off in <span class="ui">Profile → Writing style</span>; it is added to every draft.</p>
+<h3>The greeting or sign-off appears twice, or not at all</h3>
+<p>Check <span class="ui">Apply my style</span> in Profile. With it on, the app removes greetings the model wrote and adds yours; with it off,
+  the draft is the model's text as written.</p>
+
+<h2>The app</h2>
+<h3>A yellow banner says “Could not open … Nothing will be saved”</h3>
+<p>The data file is in use or its folder can't be written. Close other copies of Inbox Chat and start it again. See
+  <a href="data.html#where">where your data is kept</a>.</p>
+<h3>Windows SmartScreen warns when starting the app</h3>
+<p>The app isn't code-signed. Click <b>More info → Run anyway</b>. Download it only from the project's official release page,
+  <a href="https://github.com/adelahmed/inbox-chat/releases">github.com/adelahmed/inbox-chat/releases</a>; each release lists the file's SHA-256 checksum.</p>
+<h3>I want to start over</h3>
+<p>See <a href="data.html#fresh">Starting fresh</a>: rename the data file instead of deleting it.</p>
+<p class="foot">Still stuck? See <a href="about.html">About</a> for how to reach the author.</p>
+</main>
+</body>
+</html>

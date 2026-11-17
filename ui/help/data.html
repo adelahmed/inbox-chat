@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data &amp; privacy · Inbox Chat Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<nav class="hnav" aria-label="Help pages">
+  <a href="index.html">Introduction</a>
+  <a href="guide.html">User guide</a>
+  <a href="config.html">Configuration</a>
+  <a href="data.html" aria-current="page">Data &amp; privacy</a>
+  <a href="troubleshooting.html">Troubleshooting</a>
+  <a href="about.html">About</a>
+  <a href="ar/data.html" class="lang" lang="ar" hreflang="ar">العربية</a>
+</nav>
+<main>
+<h1>Data &amp; privacy</h1>
+<p class="lead">Where Inbox Chat keeps its data, what is in it, how to back it up, and what leaves your PC.</p>
+
+<div class="toc"><b>On this page</b>
+  <ol>
+    <li><a href="#where">Where your data is kept</a></li>
+    <li><a href="#inside">What the data file holds</a></li>
+    <li><a href="#backup">Back up and restore</a></li>
+    <li><a href="#move">New PC or another location</a></li>
+    <li><a href="#temp">Temporary files</a></li>
+    <li><a href="#leaves">What leaves your PC</a></li>
+    <li><a href="#outlook">What the app changes in Outlook</a></li>
+    <li><a href="#safety">Built-in protection</a></li>
+    <li><a href="#fresh">Starting fresh</a></li>
+  </ol>
+</div>
+
+<h2 id="where">1. Where your data is kept</h2>
+<p>Everything Inbox Chat saves is in <b>one database file</b> (SQLite) in your Windows user profile:</p>
+<div class="callout tip">
+  <span class="t">Data file</span>
+  <code>%APPDATA%\InboxChat\inbox-chat.db</code><br>
+  which is usually <code>C:\Users\<i>your-user-name</i>\AppData\Roaming\InboxChat\inbox-chat.db</code>
+</div>
+<p>The exact path on this PC is shown at the bottom of this Help window, with a <span class="ui">Copy path</span> button.
+  To open the folder: press <kbd>Win</kbd>+<kbd>R</kbd>, type <code>%APPDATA%\InboxChat</code> and press <kbd>Enter</kbd>.</p>
+<p>While the app is running you will also see <code>inbox-chat.db-wal</code> and <code>inbox-chat.db-shm</code> next to it. They are part
+  of the database; leave them alone.</p>
+<div class="callout bad"><span class="t">Please don't delete this file.</span>
+  It holds your settings, encrypted API keys, profile and writing style, conversations and everything the app has learned. Without it
+  the app starts as if newly installed: the welcome window appears, API keys and your profile must be entered again, and learning starts
+  over from your Sent Items. Disk-cleaning tools usually leave <code>AppData\Roaming</code> alone, but check before you clean it by hand.
+  Your emails and drafts are not in this file; they stay in Outlook.</div>
+<p class="muted">The file is created automatically the first time the app runs. Each Windows user on the PC has their own.</p>
+
+<h2 id="inside">2. What the data file holds</h2>
+<table>
+  <tr><th>Contents</th><th>Details</th></tr>
+  <tr><td><b>Settings</b></td><td class="wrap">Provider, server addresses, models, proxy and options.</td></tr>
+  <tr><td><b>API keys</b></td><td class="wrap">Encrypted with Windows (DPAPI) for your Windows account: they cannot be read by other users or on another PC.</td></tr>
+  <tr><td><b>Profile</b></td><td class="wrap">Your names, department, keywords, background, language and writing style.</td></tr>
+  <tr><td><b>Conversations</b></td><td class="wrap">Your chats with the assistant, including the parts of emails it read to answer.</td></tr>
+  <tr><td><b>Email ids</b></td><td class="wrap">The short ids (<code>m12</code>) linked to Outlook's internal ids, so links in old chats keep working.</td></tr>
+  <tr><td><b>Drafts log</b></td><td class="wrap">A list of the drafts the assistant saved for you.</td></tr>
+  <tr><td><b>Learned replies and contacts</b></td><td class="wrap">Your past replies with the emails they answered, and the people you write to.</td></tr>
+  <tr><td><b>✨ panels</b></td><td class="wrap">Saved summaries and suggestions, so reopening an email is instant.</td></tr>
+  <tr><td><b>Follow-ups</b></td><td class="wrap">The requests found in your Sent Items and the ones you dismissed.</td></tr>
+</table>
+<p>Because the file contains text from your emails, treat it like your mailbox: don't share it and keep backups in a safe place.</p>
+
+<h2 id="backup">3. Back up and restore</h2>
+<ol class="steps">
+  <li><b>Close Inbox Chat</b>, so the database is complete in one file.</li>
+  <li><b>Copy</b> <code>inbox-chat.db</code> from <code>%APPDATA%\InboxChat</code> to your backup location.</li>
+  <li><b>To restore</b>, close the app and copy the file back to the same place (replace the existing one).</li>
+</ol>
+<div class="callout tip"><span class="t">Only need your setup?</span> <span class="ui">Settings → Export to file…</span> saves settings and
+  profile as a small file that you can import anywhere. See <a href="config.html#files">Settings files</a>.</div>
+
+<h2 id="move">4. New PC or another location</h2>
+<ul>
+  <li><b>New PC or Windows account:</b> the easiest way is <span class="ui">Settings → Export</span> on the old PC and
+    <span class="ui">Import</span> on the new one. If you copy the data file instead, enter your API keys again: they were encrypted
+    for the old account. Learned replies rebuild themselves from Sent Items either way.</li>
+  <li><b>Another folder:</b> set the environment variable <code>INBOX_CHAT_DB</code> to the full path of the file you want, for example
+    in a command prompt: <code>setx INBOX_CHAT_DB "D:\InboxChat\inbox-chat.db"</code>, then restart the app. To keep your data, close the app
+    and move the existing file there first.</li>
+  <li>Keep the file on a local disk. A folder that a cloud-storage app keeps in sync can damage a database that is open.</li>
+</ul>
+
+<h2 id="temp">5. Temporary files</h2>
+<p>Attachments you preview or open are saved to <code>%TEMP%\InboxChat\attachments</code>, and pictures inside emails to
+  <code>%TEMP%\InboxChat\inline</code>. These are copies; you can delete them whenever the app is closed.</p>
+
+<h2 id="leaves">6. What leaves your PC</h2>
+<p>Inbox Chat talks to one outside party only: <b>the AI provider you chose in Settings</b>. It sends:</p>
+<ul>
+  <li>your question and the emails the assistant reads to answer it (senders, recipients, subjects, text);</li>
+  <li>each email you open, when automatic ✨ suggestions are on;</li>
+  <li>your profile's department, keywords and background, and a few of your past replies as style examples.</li>
+</ul>
+<p>Nothing else is sent anywhere: no usage data, no tracking, no update checks.</p>
+<div class="callout ok"><span class="t">Keep everything in-house.</span> With Ollama on this PC or on your own network, your mail never
+  leaves your organisation.</div>
+<div class="callout warn"><span class="t">With a cloud provider</span>, mail content is processed by that company under its terms. Check
+  your organisation's data policy first; the top bar shows a <b>cloud</b> badge whenever a cloud provider is selected.</div>
+
+<h2 id="outlook">7. What the app changes in Outlook</h2>
+<table>
+  <tr><th>Does</th><th>Never does</th></tr>
+  <tr><td class="wrap">Saves reply, reply-all, forward and new-email <b>drafts</b> in your Drafts folder.<br>
+    Marks emails as <b>read</b> when you open them (can be turned off in Profile).<br>
+    Starts classic Outlook if it isn't running.</td>
+    <td class="wrap">Send email.<br>Delete, move, flag or categorise anything.<br>Change your Outlook settings or rules.</td></tr>
+</table>
+
+<h2 id="safety">8. Built-in protection</h2>
+<ul>
+  <li>Emails are shown in a locked-down view: scripts inside an email never run.</li>
+  <li>Pictures stored on the internet are not downloaded, so senders can't tell when you read their email.</li>
+  <li>Links ask before opening in your browser.</li>
+  <li>Risky attachment types (programs, scripts) are refused, like in Outlook.</li>
+  <li>Attachments you open are marked as downloaded from the internet, so Office opens them in Protected View.</li>
+  <li>API keys never appear in the window after you save them.</li>
+</ul>
+
+<h2 id="fresh">9. Starting fresh</h2>
+<p>To reset the app completely, close it and <b>rename</b> <code>inbox-chat.db</code> (for example to <code>inbox-chat-old.db</code>) rather
+  than deleting it, so you can go back. The next start creates a new, empty file and shows the welcome window. To clear only part
+  of the data, use <span class="ui">Forget learned replies</span> in Profile or delete conversations with <span class="ui">🗑</span>.</p>
+<p class="foot">Next: <a href="troubleshooting.html">Troubleshooting</a> · <a href="about.html">About</a></p>
+</main>
+</body>
+</html>

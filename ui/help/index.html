@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Introduction · Inbox Chat Help</title>
+<link rel="stylesheet" href="help.css">
+</head>
+<body>
+<nav class="hnav" aria-label="Help pages">
+  <a href="index.html" aria-current="page">Introduction</a>
+  <a href="guide.html">User guide</a>
+  <a href="config.html">Configuration</a>
+  <a href="data.html">Data &amp; privacy</a>
+  <a href="troubleshooting.html">Troubleshooting</a>
+  <a href="about.html">About</a>
+  <a href="ar/index.html" class="lang" lang="ar" hreflang="ar">العربية</a>
+</nav>
+<main>
+<h1>Welcome to Inbox Chat</h1>
+<p class="lead">An AI assistant that sits next to your classic Outlook mailbox. Ask about your mail, get a summary
+  and a suggested reply for every email, and have replies, forwards and new emails written for you as drafts.</p>
+
+<div class="cards">
+  <div class="card"><div class="ico">📝</div><h3>It never sends</h3>
+    <p>Everything it writes is saved in Outlook's <b>Drafts</b> folder. You read it, change it if you like, and send it from Outlook yourself.</p></div>
+  <div class="card"><div class="ico">🧠</div><h3>You choose the AI</h3>
+    <p>A local <b>Ollama</b> model keeps mail on your own network. Cloud models from OpenAI, Anthropic, Google and Moonshot are also supported.</p></div>
+  <div class="card"><div class="ico">💻</div><h3>Your data stays on this PC</h3>
+    <p>Settings, conversations and what the app learns are kept in one file on this computer. See <a href="data.html">Data &amp; privacy</a>.</p></div>
+</div>
+
+<figure>
+  <img src="img/overview.png" alt="The Inbox Chat window: folders, message list, reading pane with the assistant panel, and the chat">
+  <figcaption>The Inbox Chat window (shown with the built-in sample mailbox).</figcaption>
+</figure>
+
+<h2>The window at a glance</h2>
+<table>
+  <tr><th>Area</th><th>What it does</th></tr>
+  <tr><td><b>Top bar</b></td><td class="wrap">Two status lights: <b>Outlook</b> (connected to your mailbox) and the <b>LLM</b>
+    (the AI model answers). A <span class="cloud">cloud</span> badge appears when you use a cloud provider.
+    <span class="ui">Profile</span>, <span class="ui">Settings</span> and <span class="ui">Help</span> are on the right.</td></tr>
+  <tr><td><b>1 · Folders</b></td><td class="wrap">Your Outlook folders with unread counts. Click one to list its emails.</td></tr>
+  <tr><td><b>2 · Messages</b></td><td class="wrap">Newest first. Badges show what concerns you:
+    <span class="tag to_you">To you</span> <span class="tag cc_you">CC</span> <span class="tag mentions_you">Mentions you</span>
+    <span class="tag department">Department</span> <span class="tag request">Request</span>. Tick <span class="ui">For me</span> to hide the rest.</td></tr>
+  <tr><td><b>3 · Reading pane</b></td><td class="wrap">The email as Outlook shows it, with the <b>✨ Assistant</b> panel on top
+    (summary, what you need to do, suggested reply), then attachments and the earlier messages of the conversation.</td></tr>
+  <tr><td><b>4 · Assistant</b></td><td class="wrap">A chat about the open email or your whole mailbox. Answers point to
+    emails as <code>m12</code>; click one to open it.</td></tr>
+</table>
+<p class="muted">Drag the thin bars between the panes to make them wider or narrower. The app remembers your layout.</p>
+
+<h2>Get started in four steps</h2>
+<ol class="steps">
+  <li><b>Have classic Outlook ready.</b> Inbox Chat works with the classic Outlook desktop app. If Outlook is not running,
+    the app starts it (minimized) and connects when it has loaded.</li>
+  <li><b>Choose your AI model</b> in <span class="ui">Settings</span>: pick a provider, check the server address,
+    paste an API key for a cloud provider, and choose a model. <a href="config.html#llm">How to choose →</a></li>
+  <li><b>Tell it about yourself</b> in <span class="ui">Profile</span>: how your name appears in emails, your team and its topics,
+    the language you write in and, if you like, your greeting and sign-off. <a href="config.html#profile">Profile guide →</a></li>
+  <li><b>Open an email and ask.</b> Read the ✨ panel, or type in the chat, for example
+    “Summarize this thread” or “Reply that Wednesday works”. The reply is saved in Drafts.
+    <a href="guide.html">User guide →</a></li>
+</ol>
+<div class="callout tip"><span class="t">Got a settings file?</span>
+  A colleague or another PC can give you a ready-made setup as one file. Load it with
+  <span class="ui">Settings → Import from file…</span> and only add your own name and style.
+  <a href="config.html#files">Settings files →</a></div>
+
+<h2>What you need</h2>
+<ul>
+  <li>Windows 10 or 11 (the WebView2 component is already part of Windows 11 and current Windows 10).</li>
+  <li><b>Classic</b> Outlook, the desktop app, with your mailbox set up. The <i>new</i> Outlook cannot be used by other
+    programs, so it is not supported.</li>
+  <li>An AI model: Ollama on this PC or a server on your network, or an account with a cloud provider.</li>
+  <li>No installation and no administrator rights: <code>InboxChat.exe</code> runs as it is.</li>
+</ul>
+
+<h2>Try it without your mailbox</h2>
+<p>Start the app with <code>InboxChat.exe --demo</code> to explore a sample mailbox. Demo mode does not touch Outlook and
+  saves nothing.</p>
+
+<h2>Where to next</h2>
+<div class="cards">
+  <a class="card" href="guide.html"><div class="ico">📖</div><h3>User guide</h3><p>Reading mail, the ✨ panel, chatting, drafts, follow-ups.</p></a>
+  <a class="card" href="config.html"><div class="ico">⚙️</div><h3>Configuration</h3><p>AI providers, your profile and writing style, settings files.</p></a>
+  <a class="card" href="data.html"><div class="ico">🔒</div><h3>Data &amp; privacy</h3><p>Where your data file is, what leaves your PC, backups.</p></a>
+  <a class="card" href="troubleshooting.html"><div class="ico">🛠️</div><h3>Troubleshooting</h3><p>Status lights, security prompts, slow answers.</p></a>
+</div>
+<p class="foot">Press <kbd>F1</kbd> anywhere in the app to open this help. <kbd>Esc</kbd> closes it.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حل المشكلات · تعليمات Inbox Chat</title>
+<link rel="stylesheet" href="../help.css">
+</head>
+<body>
+<nav class="hnav" aria-label="صفحات التعليمات">
+  <a href="index.html">مقدمة</a>
+  <a href="guide.html">دليل الاستخدام</a>
+  <a href="config.html">الإعداد</a>
+  <a href="data.html">البيانات والخصوصية</a>
+  <a href="troubleshooting.html" aria-current="page">حل المشكلات</a>
+  <a href="about.html">حول البرنامج</a>
+  <a href="../troubleshooting.html" class="lang" lang="en" hreflang="en">English</a>
+</nav>
+<main>
+<h1>حل المشكلات</h1>
+<p class="lead">يدلّك ضوءا الحالة في الشريط العلوي على موضع المشكلة: <b>Outlook</b> لصندوق بريدك، و<b>LLM</b> لنموذج الذكاء الاصطناعي.</p>
+
+<h2>Outlook</h2>
+<h3>ضوء Outlook أحمر، أو لا تظهر المجلدات</h3>
+<ul>
+  <li>إذا كان Outlook مغلقاً، يشغّله التطبيق مصغّراً ويتصل به بعد اكتمال تحميله، وقد يستغرق ذلك دقيقة ونصفاً.</li>
+  <li>أكمل أي نافذة في Outlook تنتظر منك إجراءً (اختيار ملف التعريف، أو كلمة المرور، أو تحديث)، ثم انقر <span class="ui">⟳</span> بجانب
+    <span class="en">Folders</span>.</li>
+  <li>تأكد أنك تستخدم Outlook <b>الكلاسيكي</b>. إذا كان مفتاح <span class="en">New Outlook</span> أعلى نافذة Outlook مفعّلاً فأوقفه، إذ لا يسمح
+    Outlook الجديد للبرامج الأخرى بالتعامل معه.</li>
+</ul>
+<h3>يعرض Outlook التنبيه «<span class="en">A program is trying to access e-mail address information…</span>»</h3>
+<p>هذا حارس الأمان في Outlook نفسه، ويعتمد ظهوره على إعدادات جهتك وحالة برنامج مكافحة الفيروسات. اختر <b class="en">Allow</b> (لمدة تصل
+  إلى 10 دقائق) ليتمكن <span class="en">Inbox Chat</span> من قراءة بريدك، أو اطلب من فريق تقنية المعلومات اعتماد التطبيق.</p>
+<h3>بعض الصور مفقودة في رسالة</h3>
+<p>لا يحمّل التطبيق الصور المخزنة على الإنترنت، وهذا مقصود. انقر <span class="ui">Open in Outlook</span> لعرض الرسالة بصورها.</p>
+
+<h2>نموذج الذكاء الاصطناعي</h2>
+<h3>ضوء LLM أحمر</h3>
+<ul>
+  <li><b>Ollama:</b> تأكد أن Ollama يعمل على ذلك الجهاز، وأن العنوان في الإعدادات صحيح (الافتراضي <code>http://localhost:11434</code>)،
+    وأن النموذج منزَّل (الأمر <code>ollama list</code>). وإذا كان Ollama على جهاز آخر فيجب إعداده لقبول الاتصالات من الشبكة.</li>
+  <li><b>المزوّد السحابي:</b> تحقق من مفتاح API ومن وجود رصيد في حسابك. وفي شبكة الشركة فعّل <span class="ui">Use proxy</span>، وإذا كان
+    Windows يستخدم نص إعداد تلقائياً للوسيط فاكتب عنوان الوسيط بنفسك.</li>
+  <li><b>أخطاء الشهادات (TLS)</b> في شبكة تفحص الاتصالات الآمنة: اضبط <code>INBOX_CHAT_CA_BUNDLE</code> على الشهادة الجذرية لجهتك
+    (ملف PEM). راجع <a href="config.html#advanced">خيارات التشغيل</a>.</li>
+</ul>
+<h3>رسالة «<span class="en">Could not decrypt the … API key</span>»</h3>
+<p>يحدث هذا عند نسخ ملف البيانات من جهاز آخر أو من حساب Windows آخر، لأن تشفير المفتاح مرتبط بذلك الحساب. أدخل المفتاح من جديد في
+  الإعدادات واحفظ.</p>
+<h3>المساعد لا يبحث في بريدي، أو يختلق إجابات</h3>
+<p>اختر نموذجاً يدعم الأدوات، وتعرض قائمة النماذج ذلك في Ollama. وتواجه النماذج الصغيرة جداً صعوبة في هذه المهام، فجرّب نموذجاً أكبر.</p>
+<h3>الإجابات بطيئة</h3>
+<ul>
+  <li>تعتمد سرعة النماذج المحلية على قدرات جهازك. جرّب نموذجاً أصغر، أو اضبط <span class="ui">Reasoning</span> على
+    <span class="en">Off</span>، أو قلّل <span class="ui">Context window</span>.</li>
+  <li>تعمل لوحة ✨ مع كل رسالة تفتحها. وإذا كان ذلك يبطئك فأوقف الاقتراحات التلقائية من <span class="ui">Profile → Learning &amp; behaviour</span>.</li>
+</ul>
+
+<h2>المسودات والمستلمون</h2>
+<h3>لا أجد المسودة</h3>
+<p>يحفظ التطبيق المسودات في مجلد <b>المسودات</b> في Outlook، والأحدث أولاً، ويمكنك فتحه من شجرة المجلدات. وتعرض المحادثة حفظ كل مسودة
+  خطوةً من خطوات الإجابة.</p>
+<h3>يسألني المساعد عن الشخص الذي أقصده</h3>
+<p>يطابق الاسم الذي ذكرته أكثر من شخص. أجب بالاسم الكامل أو بعنوان البريد. يتعلّم التطبيق الأسماء من العناصر المرسلة، ويضيف زر
+  <span class="ui">Learn now</span> في <span class="ui">Profile → Learning &amp; behaviour</span> الأشخاص الذين راسلتهم مؤخراً.</p>
+<h3>توقيعي في Outlook غير موجود في المسودات</h3>
+<p>لا يضيف Outlook التوقيع إلا في محرره. اكتب عبارة الختام في <span class="ui">Profile → Writing style</span>، فيضيفها التطبيق إلى كل مسودة.</p>
+<h3>تظهر التحية أو عبارة الختام مرتين، أو لا تظهر</h3>
+<p>تحقق من <span class="ui">Apply my style</span> في الملف الشخصي. عند تفعيله يحذف التطبيق التحيات التي كتبها النموذج ويضيف تحيتك، وعند
+  إيقافه تبقى المسودة نص النموذج كما كتبه.</p>
+
+<h2>التطبيق</h2>
+<h3>يظهر شريط أصفر نصه «<span class="en">Could not open … Nothing will be saved</span>»</h3>
+<p>ملف البيانات قيد الاستخدام، أو تتعذر الكتابة في مجلده. أغلق النسخ الأخرى من <span class="en">Inbox Chat</span> وشغّله من جديد. راجع
+  <a href="data.html#where">مكان حفظ بياناتك</a>.</p>
+<h3>يعرض Windows SmartScreen تحذيراً عند تشغيل التطبيق</h3>
+<p>التطبيق غير موقّع رقمياً. انقر <span class="en"><b>More info</b> → <b>Run anyway</b></span>. ونزّل التطبيق من صفحة الإصدارات الرسمية
+  للمشروع فقط: <a href="https://github.com/adelahmed/inbox-chat/releases" class="en">github.com/adelahmed/inbox-chat/releases</a>، وتذكر كل نسخة
+  بصمة الملف (SHA-256) للتحقق منه.</p>
+<h3>أريد البدء من جديد</h3>
+<p>راجع <a href="data.html#fresh">البدء من جديد</a>: غيّر اسم ملف البيانات بدلاً من حذفه.</p>
+<p class="foot">ما زالت المشكلة قائمة؟ راجع صفحة <a href="about.html">حول البرنامج</a> لمعرفة طريقة التواصل مع المؤلف.</p>
+</main>
+</body>
+</html>
